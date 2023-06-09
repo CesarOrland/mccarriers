@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "../screens/login/Login";
 import Start from "../screens/home/Start";
+import StartAdmin from "../screens/admin/StartAdmin";
 
 const Navigation = () => {
   const { Navigator, Screen } = createNativeStackNavigator();
@@ -21,6 +22,15 @@ const Navigation = () => {
         <Screen
           name="Start"
           component={Start}
+          options={{
+            unmountOnBlur: true,
+            headerShown: false,
+          }}
+        />
+        {/* SCREENS DE ADMINS */}
+        <Screen
+          name="StartAdmin"
+          component={StartAdmin}
           options={{
             unmountOnBlur: true,
             headerShown: false,

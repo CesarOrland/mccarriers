@@ -5,9 +5,23 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getLogin } from "../../../redux/actions";
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
+  const [username, setUsername] = useState("admin@admin.com"); // hola2@hola.com
+  const [password, setPassword] = useState("12345678"); //12345678
+  const { login } = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    let user = {
+      password: password,
+      email: username,
+    };
+    dispatch(getLogin(user, navigation));
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -18,15 +32,28 @@ const Login = ({navigation}) => {
         <Text style={styles.subtitle}>Correo electrónico</Text>
 
         <View style={{ alignItems: "center" }}>
-          <TextInput style={styles.input} placeholder="ejemplo@corre.com" />
+          <TextInput
+            style={styles.input}
+            placeholder="ejemplo@corre.com"
+            onChangeText={setUsername}
+            value={username.toLowerCase()}
+          />
         </View>
         <Text style={styles.subtitle}>Contraseña</Text>
         <View style={{ alignItems: "center" }}>
-          <TextInput style={styles.input} placeholder="Ingresar contraseña" />
+          <TextInput
+            style={styles.input}
+            placeholder="Ingresar contraseña"
+            onChangeText={setPassword}
+            value={password}
+          />
         </View>
-        <TouchableOpacity style={{alignItems:"center", marginTop:"10%"}} onPress={() => navigation.navigate("Start")} >
-          <View style={styles.button} >
-            <Text style={styles.textInput} >Entrar</Text>
+        <TouchableOpacity
+          style={{ alignItems: "center", marginTop: "10%" }}
+          onPress={() => handleLogin()}
+        >
+          <View style={styles.button}>
+            <Text style={styles.textInput}>Entrar</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -37,7 +64,7 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   header: {
     flex: 0.3,
@@ -62,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: "5%",
     marginTop: "5%",
-    marginBottom: "2%"
+    marginBottom: "2%",
   },
   input: {
     width: "90%",
@@ -72,19 +99,19 @@ const styles = StyleSheet.create({
     borderColor: "#AEAEAE",
     paddingLeft: 10,
   },
-  button:{
-    width:"90%",
+  button: {
+    width: "90%",
     height: 70,
-    backgroundColor:"#003292",
+    backgroundColor: "#003292",
     borderRadius: 50,
-    alignItems:"center",
-    justifyContent:"center"
+    alignItems: "center",
+    justifyContent: "center",
   },
-  textInput:{
-    color:"#FFFFFF",
+  textInput: {
+    color: "#FFFFFF",
     fontSize: 22,
-    fontWeight:"bold"
-  }
+    fontWeight: "bold",
+  },
 });
 
 export default Login;
